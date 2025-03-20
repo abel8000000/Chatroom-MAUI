@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Chatroom_MAUI.MainPage">
+    <Grid Padding="10" ColumnSpacing="10">
+        <!-- Define two columns: large left column for messages & input, and a narrow right column for users -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Left column: Chat messages and text input -->
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Chat messages area -->
+            <ScrollView Grid.Row="0" BackgroundColor="#555555">
+                <StackLayout x:Name="ChatMessages" Padding="5">
+                    <!-- Chat messages will be added here dynamically -->
+                </StackLayout>
+            </ScrollView>
+
+            <!-- Text input area -->
+            <Grid Grid.Row="1" ColumnDefinitions="*, Auto" Margin="0,10,0,0" ColumnSpacing="8">
+                <Entry x:Name="MessageEntry"
+                   Grid.Column="0"
+                   Placeholder="Type your message here"
+                   Completed="MessageEntry_Completed"/>
+                <Button Text="Send"
+                    Grid.Column="1"
+                    Clicked="SendButton_Clicked"/>
+            </Grid>
+        </Grid>
+
+        <!-- Right column: User list -->
+        <Grid Grid.Column="1" RowDefinitions="20, *, 50">
+            <Label Text="Connected Users:"/>
+            <CollectionView Grid.Row="1"
+            x:Name="UserList"
+            ItemsSource="{Binding Users}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Stroke="Transparent" Padding="2">
+                            <Label Text="{Binding}" FontSize="Small"/>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Button Grid.Row="2"
+                    Text="Log out"
+                    WidthRequest="80"
+                    HeightRequest="40"
+                    BackgroundColor="IndianRed"
+                    HorizontalOptions="End"
+                    VerticalOptions="End"
+                    Clicked="LogoutButton_Clicked"/>
+        </Grid>
+    </Grid>
+</ContentPage>
