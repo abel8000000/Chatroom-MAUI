@@ -1,36 +1,56 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net;
+using System.Threading.Tasks;
 
-namespace Chatroom_MAUI
+namespace Chatroom_MAUI;
+
+public partial class Login : ContentPage
 {
-    public partial class Login : ContentPage
+    User user = new User("");
+
+    public Login()
     {
-        public Login()
+        InitializeComponent();
+    }
+
+    private void ConnectButton_Clicked(object sender, EventArgs e)
+    {
+        Connect();
+    }
+
+    private void ServerIpEntry_Completed(object sender, EventArgs e)
+    {
+        Connect();
+    }
+
+    private async void Connect()
+    {
+        string username = UsernameEntry.Text;
+        string serverIp = ServerIpEntry.Text;
+        if (string.IsNullOrWhiteSpace(username))
         {
-            InitializeComponent();
+            await DisplayAlert("Error", "Please enter a username", "OK");
+            return;
+        }
+        if (username.Length > 32)
+        {
+            await DisplayAlert("Error", "The username cannot be longer than 32 characters.", "OK");
+            return;
+        }
+        if (string.IsNullOrWhiteSpace(serverIp) || !IPAddress.TryParse(serverIp, out _))
+        {
+            await DisplayAlert("Error", "Please enter a server IP address", "OK");
+            return;
         }
 
-        private void ConnectButton_Clicked(object sender, EventArgs e)
-        {
-            Connect();
-        }
+        user.Username = username.Trim();
+        AppState.ServerIp = serverIp.Trim();
+        await user.Connect();
 
-        private void UsernameEntry_Completed(object sender, EventArgs e)
-        {
-            Connect();
-        }
+        AppState.CurrentUser = user;
 
-        private async void Connect()
-        {
-            var username = UsernameEntry.Text?.Trim();
-            if (string.IsNullOrEmpty(username))
-            {
-                await DisplayAlert("Error", "Please enter a username.", "OK");
-                return;
-            }
+        await Shell.Current.GoToAsync("///MainPage");
 
-            // TODO: Username storing implementation
-
-            await Shell.Current.GoToAsync("///MainPage");
-        }
+        UsernameEntry.Text = "";
+        ServerIpEntry.Text = "";
     }
 }

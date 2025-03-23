@@ -8,28 +8,35 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- Welcome Text -->
         <Label Grid.Row="0"
-               Text="Welcome to Chatroom"
-               FontSize="24"
-               HorizontalOptions="Center"
-               Margin="0,20"/>
+            Text="Welcome to Chatroom"
+            FontSize="24"
+            HorizontalOptions="Center"
+            Margin="0,20"/>
 
         <!-- Username Input -->
         <Entry Grid.Row="1"
-               x:Name="UsernameEntry"
-               Placeholder="Enter your username"
-               Margin="0,10"
-               Completed="UsernameEntry_Completed"/>
+            x:Name="UsernameEntry"
+            Placeholder="Enter your username"
+            Margin="0,10"/>
+
+        <!-- Server IP Input -->
+        <Entry Grid.Row="2"
+            x:Name="ServerIpEntry"
+            Placeholder="Enter the server IP address"
+            Margin="0,10"
+            Completed="ServerIpEntry_Completed"/>
 
         <!-- Connect Button -->
-        <Button Grid.Row="2"
-                Text="Connect"
-                Clicked="ConnectButton_Clicked"
-                HorizontalOptions="Center"
-                Margin="0,20"/>
+        <Button Grid.Row="3"
+            Text="Connect"
+            Clicked="ConnectButton_Clicked"
+            HorizontalOptions="Center"
+            Margin="0,20"/>
     </Grid>
 
 </ContentPage>

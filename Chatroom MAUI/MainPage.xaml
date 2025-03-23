@@ -17,10 +17,20 @@
             </Grid.RowDefinitions>
 
             <!-- Chat messages area -->
-            <ScrollView Grid.Row="0" BackgroundColor="#555555">
-                <StackLayout x:Name="ChatMessages" Padding="5">
-                    <!-- Chat messages will be added here dynamically -->
-                </StackLayout>
+            <ScrollView Grid.Row="0" BackgroundColor="#444444" Padding="10">
+                <CollectionView x:Name="MessageBox" ItemsSource="{Binding Messages}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="0,0,0,10">
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label Text="{Binding Username}" TextColor="MediumPurple" FontSize="Small" FontAttributes="Bold"/>
+                                    <Label Text="{Binding Time, StringFormat='{0:HH:mm - dd/MM/yyyy}'}" TextColor="Gray" FontSize="Micro" VerticalTextAlignment="Center"/>
+                                </HorizontalStackLayout>
+                                <Label Text="{Binding Content}" TextColor="White" FontSize="Small"/>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </ScrollView>
 
             <!-- Text input area -->
