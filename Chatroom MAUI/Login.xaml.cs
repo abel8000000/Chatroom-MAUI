@@ -36,11 +36,6 @@ public partial class Login : ContentPage
             await DisplayAlert("Error", "The username cannot be longer than 32 characters.", "OK");
             return;
         }
-        if (string.IsNullOrWhiteSpace(serverIp) || !IPAddress.TryParse(serverIp, out _))
-        {
-            await DisplayAlert("Error", "Please enter a server IP address", "OK");
-            return;
-        }
 
         user.Username = username.Trim();
         AppState.ServerIp = serverIp.Trim();

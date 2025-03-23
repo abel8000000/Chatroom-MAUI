@@ -33,7 +33,7 @@ public partial class MainPage : ContentPage
         try
         {
             hubConnection = new HubConnectionBuilder()
-                .WithUrl($"http://{AppState.ServerIp}:5170/chathub")
+                .WithUrl($"https://{AppState.ServerIp}/chathub")
                 .Build();
 
             hubConnection.On<string, string, DateTime>("ReceiveMessage", (username, content, time) =>
@@ -76,7 +76,7 @@ public partial class MainPage : ContentPage
         try
         {
             using var client = new HttpClient();
-            var response = await client.GetAsync($"http://{AppState.ServerIp}:5170/api/users");
+            var response = await client.GetAsync($"https://{AppState.ServerIp}/api/users");
             response.EnsureSuccessStatusCode();
 
             var json = await response.Content.ReadAsStringAsync();
@@ -104,7 +104,7 @@ public partial class MainPage : ContentPage
         try
         {
             using var client = new HttpClient();
-            var response = await client.GetAsync($"http://{AppState.ServerIp}:5170/api/messages");
+            var response = await client.GetAsync($"https://{AppState.ServerIp}/api/messages");
             response.EnsureSuccessStatusCode();
 
             var json = await response.Content.ReadAsStringAsync();

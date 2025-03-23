@@ -29,10 +29,6 @@ public class User
     {
         try
         {
-            if (string.IsNullOrWhiteSpace(AppState.ServerIp) || !IPAddress.TryParse(AppState.ServerIp, out _))
-            {
-                return;
-            }
 
             // Serializa el objeto User a JSON, y lo prepara para enviar el POST request
             var json = JsonSerializer.Serialize(this);
@@ -40,7 +36,7 @@ public class User
 
             // Crea una instancia de HttpClient, envia el POST request al endpoint "connect" del server con los datos del usuario, verifica el response
             using var client = new HttpClient();
-            var response = await client.PostAsync($"http://{AppState.ServerIp}:5170/api/users/connect", data);
+            var response = await client.PostAsync($"https://{AppState.ServerIp}/api/users/connect", data);
             response.EnsureSuccessStatusCode();
         }
         catch (Exception ex)
@@ -53,16 +49,12 @@ public class User
     {
         try
         {
-            if (string.IsNullOrWhiteSpace(AppState.ServerIp) || !IPAddress.TryParse(AppState.ServerIp, out _))
-            {
-                return;
-            }
 
             var json = JsonSerializer.Serialize(this);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
             using var client = new HttpClient();
-            var response = await client.PostAsync($"http://{AppState.ServerIp}:5170/api/users/disconnect", data);
+            var response = await client.PostAsync($"https://{AppState.ServerIp}/api/users/disconnect", data);
             response.EnsureSuccessStatusCode();
         }
         catch (Exception ex)
@@ -76,10 +68,6 @@ public class User
     {
         try
         {
-            if (string.IsNullOrWhiteSpace(AppState.ServerIp) || !IPAddress.TryParse(AppState.ServerIp, out _))
-            {
-                return;
-            }
 
             // Instancia un Mensaje con el contenido dado, serializa el mensaje a JSON y lo prepara para enviar el request
             var message = new Message(content);
@@ -88,7 +76,7 @@ public class User
 
             // Crea una instancia de HttpClient, envia el POST request al endpoint "messages" del server con los datos del mensaje, verifica el response
             using var client = new HttpClient();
-            var response = await client.PostAsync($"http://{AppState.ServerIp}:5170/api/messages", data);
+            var response = await client.PostAsync($"https://{AppState.ServerIp}/api/messages", data);
             response.EnsureSuccessStatusCode();
         }
         catch (Exception ex)
